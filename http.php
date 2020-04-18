@@ -1,4 +1,5 @@
 <?php
+require_once 'Field.php';
 $data = !empty($_POST) ? $_POST : false;
 
 
@@ -20,28 +21,16 @@ $rule = [
 
 $validatedData = [];
 
+$field = new Field();
 foreach ($data as $index => $value) {
     if (!in_array($index, $filable) || $value == '') {
         continue;
     }
 
-    switch ($value) {
-        case 'name':
-            break;
-        case 'lastname':
-            break;
-        case 'city':
-            break;
-        case 'state':
-            break;
-        case 'phone':
-            break;
-        case 'email':
-            $validatedData[$index] = filter_var($value, FILTER_VALIDATE_EMAIL);
-            break;
-        case 'cpf':
-            break;
-    }
+    $validatedData[$index] = $field->validate($index, $value);
+    var_dump( $validatedData[$index]);
+    exit;
+
 }
 
 //echo "<pre>" . var_dump($data)->die();
